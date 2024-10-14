@@ -4,12 +4,17 @@ import AdminDashboard from "@/Components/DashboardComponents/AdminDashboard.vue"
 import CreateUserModal from "@/Components/DashboardComponents/CreateUserModal.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
+
+import { useCreateUserStore } from "@/Stores/CreateUser";
+const showModal = useCreateUserStore();
+
 </script>
 
 <template>
     <Head title="Dashboard" />
 
-    <AuthenticatedLayout>
+    <div :class="{ 'blur-sm': showModal.CreateModalBtnTeacher || showModal.CreateModalBtnStudent || showModal.CreateModalBtnGuardian || showModal.CreateModalBtnDarasa }">
+        <AuthenticatedLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800">
                 Dashboard
@@ -27,7 +32,8 @@ import { Head } from "@inertiajs/vue3";
             </div>
         </div>
         <!-- Content -->
-        <AdminDashboard />
-        <CreateUserModal/>
+        <AdminDashboard/>
     </AuthenticatedLayout>
+</div>
+<CreateUserModal/>
 </template>

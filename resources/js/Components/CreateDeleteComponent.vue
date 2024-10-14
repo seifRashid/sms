@@ -1,15 +1,4 @@
 <script setup>
-import { useCreateUserStore } from "@/Stores/CreateUser";
-import { ref } from "vue";
-
-const showModal = useCreateUserStore();
-
-const showCreateModalBtn = ref(true)
-
-function showModalBtn(){
-    showModal.showCreateModalBtn(showCreateModalBtn.value)
-    // alert('hello')
-}
 
   // Define a prop for the 'for' attribute in the label
   defineProps({
@@ -30,7 +19,7 @@ function showModalBtn(){
             <slot name="labelRole"></slot>
           </label>
           <div class="flex p-2 items-center space-x-3">
-            <button @click="showModalBtn" class="border border-green-500 hover:border-green-900 text-green-900 py-2 px-3 rounded-md">
+            <button class="border border-green-500 hover:border-green-900 text-green-900 py-2 px-3 rounded-md">
               <slot name="createRole"></slot>
             </button>
             <button class="border border-red-500 hover:border-red-900 text-red-500 py-2 px-3 rounded-md">
