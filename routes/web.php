@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\DarasaController;
+use App\Http\Controllers\GuardianController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,5 +27,21 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+//for teacher
+Route::resource('teacher', TeacherController::class)
+    ->only(['store']);
+
+//for student
+Route::resource('student', StudentController::class)
+    ->only(['store']);
+
+//for Guardian
+Route::resource('guardian', GuardianController::class)
+    ->only(['store']);
+
+//for Darasa
+Route::resource('darasa', DarasaController::class)
+    ->only(['store']);
 
 require __DIR__.'/auth.php';

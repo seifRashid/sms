@@ -1,6 +1,7 @@
 <script setup>
 import { useCreateUserStore } from "@/Stores/CreateUser";
 import { useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
 
 const form = useForm({
     teacher_name: "",
@@ -16,10 +17,42 @@ const form = useForm({
     darasa_capasity: "",
 });
 
+const formType = ref("teacher");
+
 const showModal = useCreateUserStore();
 
+// const submitForm = () => {
+//     // Handle form submission logic here
+//     showModal.CreateModalBtnTeacher = false;
+//     showModal.CreateModalBtnStudent = false;
+//     showModal.CreateModalBtnGuardian = false;
+//     showModal.CreateModalBtnDarasa = false;
+// };
+
+function changeEndPointType() {
+    if (showModal.CreateModalBtnTeacher) {
+        this.formType = "teacher";
+    } else if (showModal.CreateModalBtnStudent) {
+        this.formType = "student";
+    } else if (showModal.CreateModalBtnGuardian) {
+        this.formType = "guardian";
+    } else if (showModal.CreateModalBtnDarasa) {
+        this.formType = "darasa";
+    }
+}
+
+// Function to handle form submission
 const submitForm = () => {
-    // Handle form submission logic here
+    form.post(`/${formType.value}`, {
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log("Form submitted successfully");
+            form.reset(); // Reset the form after successful submission
+        },
+        onError: (errors) => {
+            console.log("Form submission failed with errors:", errors);
+        },
+    });
     showModal.CreateModalBtnTeacher = false;
     showModal.CreateModalBtnStudent = false;
     showModal.CreateModalBtnGuardian = false;
@@ -28,7 +61,7 @@ const submitForm = () => {
 </script>
 <template>
     <div
-        v-show="
+        v-if="
             showModal.CreateModalBtnTeacher ||
             showModal.CreateModalBtnStudent ||
             showModal.CreateModalBtnGuardian ||
@@ -59,7 +92,7 @@ const submitForm = () => {
                 class="grid grid-cols-1 md:grid-cols-2 gap-6"
             >
                 <!-- Teacher Information -->
-                <div v-show="showModal.CreateModalBtnTeacher">
+                <div v-if="showModal.CreateModalBtnTeacher">
                     <label
                         for="teacher_name"
                         class="block font-medium text-gray-700"
@@ -74,7 +107,7 @@ const submitForm = () => {
                     />
                 </div>
 
-                <div v-show="showModal.CreateModalBtnTeacher">
+                <div v-if="showModal.CreateModalBtnTeacher">
                     <label
                         for="teacher_email"
                         class="block font-medium text-gray-700"
@@ -89,7 +122,7 @@ const submitForm = () => {
                     />
                 </div>
 
-                <div v-show="showModal.CreateModalBtnTeacher">
+                <div v-if="showModal.CreateModalBtnTeacher">
                     <label
                         for="teacher_password"
                         class="block font-medium text-gray-700"
@@ -105,7 +138,7 @@ const submitForm = () => {
                 </div>
 
                 <!-- Guardian Information -->
-                <div v-show="showModal.CreateModalBtnGuardian">
+                <div v-if="showModal.CreateModalBtnGuardian">
                     <label
                         for="guardian_name"
                         class="block font-medium text-gray-700"
@@ -120,7 +153,7 @@ const submitForm = () => {
                     />
                 </div>
 
-                <div v-show="showModal.CreateModalBtnGuardian">
+                <div v-if="showModal.CreateModalBtnGuardian">
                     <label
                         for="guardian_email"
                         class="block font-medium text-gray-700"
@@ -135,7 +168,7 @@ const submitForm = () => {
                     />
                 </div>
 
-                <div v-show="showModal.CreateModalBtnGuardian">
+                <div v-if="showModal.CreateModalBtnGuardian">
                     <label
                         for="guardian_password"
                         class="block font-medium text-gray-700"
@@ -151,7 +184,7 @@ const submitForm = () => {
                 </div>
 
                 <!-- Student Information -->
-                <div v-show="showModal.CreateModalBtnStudent">
+                <div v-if="showModal.CreateModalBtnStudent">
                     <label
                         for="student_name"
                         class="block font-medium text-gray-700"
@@ -166,7 +199,7 @@ const submitForm = () => {
                     />
                 </div>
 
-                <div v-show="showModal.CreateModalBtnStudent">
+                <div v-if="showModal.CreateModalBtnStudent">
                     <label
                         for="student_darasa"
                         class="block font-medium text-gray-700"
@@ -181,7 +214,7 @@ const submitForm = () => {
                     />
                 </div>
 
-                <div v-show="showModal.CreateModalBtnStudent">
+                <div v-if="showModal.CreateModalBtnStudent">
                     <label
                         for="student_password"
                         class="block font-medium text-gray-700"
@@ -197,7 +230,7 @@ const submitForm = () => {
                 </div>
 
                 <!-- Darasa Information -->
-                <div v-show="showModal.CreateModalBtnDarasa">
+                <div v-if="showModal.CreateModalBtnDarasa">
                     <label
                         for="darasa_name"
                         class="block font-medium text-gray-700"
@@ -212,7 +245,7 @@ const submitForm = () => {
                     />
                 </div>
 
-                <div v-show="showModal.CreateModalBtnDarasa">
+                <div v-if="showModal.CreateModalBtnDarasa">
                     <label
                         for="darasa_capasity"
                         class="block font-medium text-gray-700"
@@ -230,6 +263,7 @@ const submitForm = () => {
                 <!-- Submit Button -->
                 <div class="col-span-2 text-center">
                     <button
+                        @click="changeEndPointType"
                         type="submit"
                         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300"
                     >

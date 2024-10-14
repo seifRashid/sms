@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Teacher;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
@@ -28,7 +30,26 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         //
+        $validated = $request->validate([
+            'teacher_name' => 'required|string|max:255',
+            'teacher_email' => 'required|email',
+            'teacher_password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::create([
+            'name' => $request->teacher_name,
+            'email' => $request->teacher_email,
+            'role' => 'teacher',
+            'password' => Hash::make($request->teacher_password),
+            // dd($request->role)
+        ]);
+
+        dd($user->role);
+        $request->user()->chirps()->create($validated);
+
+        return redirect(route('chirps.index'));
     }
 
     /**
