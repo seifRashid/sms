@@ -25,6 +25,9 @@
             <button class="border border-red-500 hover:border-red-900 text-red-500 py-2 px-3 rounded-md">
               <slot name="deleteRole"></slot>
             </button>
+            <button class="border border-blue-500 hover:border-blue-900 text-blue-500 py-2 px-3 rounded-md">
+              <slot name="showRole"></slot>
+            </button>
           </div>
         </div>
       </div>

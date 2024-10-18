@@ -32,46 +32,51 @@ function showModalBtnClass() {
     <div>
         <CreateDeleteComponent
             forAttribute="teacher"
-            @click="showModalBtnTeacher"
         >
             <template #labelRole> Teacher Role </template>
 
-            <template #createRole> Create Teacher </template>
+            <template #createRole><p @click="showModalBtnTeacher"> Create Teacher </p></template>
 
             <template #deleteRole> Delete Teacher </template>
+
+            <template #showRole> Show Teacher </template>
         </CreateDeleteComponent>
 
         <!-- Guardian buttons -->
         <CreateDeleteComponent
             forAttribute="guardian"
-            @click="showModalBtnGuardian"
         >
             <template #labelRole> Guardian Role </template>
 
-            <template #createRole> Create Guardian </template>
+            <template #createRole ><p @click="showModalBtnGuardian"> Create Guardian </p></template>
 
             <template #deleteRole> Delete Guardian </template>
+
+            <template #showRole> Show Guardians </template>
         </CreateDeleteComponent>
 
         <!-- Student buttons -->
         <CreateDeleteComponent
             forAttribute="student"
-            @click="showModalBtnStudent"
         >
             <template #labelRole> Student Role </template>
 
-            <template #createRole> Create Student </template>
+            <template #createRole ><p @click="showModalBtnStudent"> Create Student </p></template>
 
             <template #deleteRole> Delete Student </template>
+
+            <template #showRole> Show Students </template>
         </CreateDeleteComponent>
 
         <!-- Class buttons -->
-        <CreateDeleteComponent forAttribute="class" @click="showModalBtnClass">
+        <CreateDeleteComponent forAttribute="class">
             <template #labelRole> Class Role </template>
 
-            <template #createRole> Create Class </template>
+            <template #createRole><p @click="showModalBtnClass"> Create Class </p></template>
 
             <template #deleteRole> Delete Class </template>
+
+            <template #showRole> Show Class </template>
         </CreateDeleteComponent>
     </div>
 </template>
