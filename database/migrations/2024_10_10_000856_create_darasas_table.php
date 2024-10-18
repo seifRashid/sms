@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('darasas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
-            $table->foreignId('teacher_id')->constrained('teachers')->onDelete('cascade');
+            // $table->foreignId('student_id')->constrained('students')->onDelete('cascade');
+            // $table->foreignId('teacher_id')->constrained('teachers')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();
         });

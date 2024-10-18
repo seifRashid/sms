@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Darasa extends Model
 {
     use HasFactory;
+
+    public function students() {
+        return $this->hasMany(Student::class);
+    }
+
+    public function teachers() {
+        return $this->belongsToMany(Teacher::class, 'class_teacher');
+    }
 }

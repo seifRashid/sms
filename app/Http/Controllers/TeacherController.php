@@ -30,26 +30,31 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        //
-        $validated = $request->validate([
+        // Step 1: Validate the incoming request
+        $validatedData = $request->validate([
             'teacher_name' => 'required|string|max:255',
-            'teacher_email' => 'required|email',
-            'teacher_password' => 'required|string|min:8|confirmed',
+            'teacher_email' => 'required|email|unique:users,email',
+            'teacher_password' => 'required|string|min:8',
+            'role' => 'required|in:student,teacher,parent'
+            // Add any additional validation for user or teacher-specific data
         ]);
-
+        // Step 2: Create the User record
         $user = User::create([
-            'name' => $request->teacher_name,
-            'email' => $request->teacher_email,
-            'role' => 'teacher',
-            'password' => Hash::make($request->teacher_password),
-            // dd($request->role)
+            'name' => $validatedData['teacher_name'],
+            'email' => $validatedData['teacher_email'],
+            'role' => $validatedData['role'],
+            'password' => Hash::make($validatedData['teacher_password']),
+            // Other user fields if necessary
+        ]);
+        // dd($user);
+        // Step 3: Create the Teacher record and link it to the user
+        Teacher::create([
+            'user_id' => $user->id, // Link the teacher to the user using the user_id
+            // Other teacher-specific fields
         ]);
 
-        dd($user->role);
-        $request->user()->chirps()->create($validated);
-
-        return redirect(route('chirps.index'));
+        // Step 4: Redirect or respond with success message
+        return redirect()->route('register')->with('success', 'Teacher created successfully!');
     }
 
     /**

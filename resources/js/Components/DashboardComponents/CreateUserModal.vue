@@ -15,9 +15,10 @@ const form = useForm({
     student_password: "",
     darasa_name: "",
     darasa_capasity: "",
+    role: "",
 });
 
-const formType = ref("teacher");
+const formType = ref("student");
 
 const showModal = useCreateUserStore();
 
@@ -29,17 +30,17 @@ const showModal = useCreateUserStore();
 //     showModal.CreateModalBtnDarasa = false;
 // };
 
-function changeEndPointType() {
-    if (showModal.CreateModalBtnTeacher) {
-        this.formType = "teacher";
+const changeEndPointType = () => {
+    if (showModal.CreateModalBtnTeacher == true) {
+        formType.value = "teacher";
     } else if (showModal.CreateModalBtnStudent) {
-        this.formType = "student";
+        formType.value = "student";
     } else if (showModal.CreateModalBtnGuardian) {
-        this.formType = "guardian";
+        formType.value = "guardian";
     } else if (showModal.CreateModalBtnDarasa) {
-        this.formType = "darasa";
+        formType.value = "darasa";
     }
-}
+};
 
 // Function to handle form submission
 const submitForm = () => {
@@ -47,16 +48,16 @@ const submitForm = () => {
         preserveScroll: true,
         onSuccess: () => {
             console.log("Form submitted successfully");
+            showModal.CreateModalBtnTeacher = false;
+            showModal.CreateModalBtnStudent = false;
+            showModal.CreateModalBtnGuardian = false;
+            showModal.CreateModalBtnDarasa = false;
             form.reset(); // Reset the form after successful submission
         },
         onError: (errors) => {
             console.log("Form submission failed with errors:", errors);
         },
     });
-    showModal.CreateModalBtnTeacher = false;
-    showModal.CreateModalBtnStudent = false;
-    showModal.CreateModalBtnGuardian = false;
-    showModal.CreateModalBtnDarasa = false;
 };
 </script>
 <template>
@@ -105,6 +106,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter teacher's name"
                     />
+                    <div
+                        v-if="form.errors.teacher_name"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.teacher_name }}
+                    </div>
                 </div>
 
                 <div v-if="showModal.CreateModalBtnTeacher">
@@ -120,6 +127,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter teacher's email"
                     />
+                    <div
+                        v-if="form.errors.teacher_email"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.teacher_email }}
+                    </div>
                 </div>
 
                 <div v-if="showModal.CreateModalBtnTeacher">
@@ -135,6 +148,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter teacher's password"
                     />
+                    <div
+                        v-if="form.errors.teacher_password"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.teacher_password }}
+                    </div>
                 </div>
 
                 <!-- Guardian Information -->
@@ -151,6 +170,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter guardian's name"
                     />
+                    <div
+                        v-if="form.errors.guardian_name"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.guardian_name }}
+                    </div>
                 </div>
 
                 <div v-if="showModal.CreateModalBtnGuardian">
@@ -166,6 +191,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter guardian's email"
                     />
+                    <div
+                        v-if="form.errors.guardian_email"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.guardian_email }}
+                    </div>
                 </div>
 
                 <div v-if="showModal.CreateModalBtnGuardian">
@@ -181,6 +212,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter guardian's password"
                     />
+                    <div
+                        v-if="form.errors.guardian_password"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.guardian_password }}
+                    </div>
                 </div>
 
                 <!-- Student Information -->
@@ -197,6 +234,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter student's name"
                     />
+                    <div
+                        v-if="form.errors.student_name"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.student_name }}
+                    </div>
                 </div>
 
                 <div v-if="showModal.CreateModalBtnStudent">
@@ -212,6 +255,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter student's darasa"
                     />
+                    <div
+                        v-if="form.errors.student_darasa"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.student_darasa }}
+                    </div>
                 </div>
 
                 <div v-if="showModal.CreateModalBtnStudent">
@@ -227,6 +276,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter student's password"
                     />
+                    <div
+                        v-if="form.errors.student_password"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.student_password }}
+                    </div>
                 </div>
 
                 <!-- Darasa Information -->
@@ -243,6 +298,12 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter darasa name"
                     />
+                    <div
+                        v-if="form.errors.darasa_name"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.darasa_name }}
+                    </div>
                 </div>
 
                 <div v-if="showModal.CreateModalBtnDarasa">
@@ -258,6 +319,34 @@ const submitForm = () => {
                         class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Enter darasa capacity"
                     />
+                    <div
+                        v-if="form.errors.darasa_capasity"
+                        class="text-red-500 text-sm"
+                    >
+                        {{ form.errors.darasa_capasity }}
+                    </div>
+                </div>
+
+                <div
+                    v-if="
+                        showModal.CreateModalBtnGuardian ||
+                        showModal.CreateModalBtnTeacher ||
+                        showModal.CreateModalBtnStudent
+                    "
+                >
+                    <label for="role" class="block font-medium text-gray-700"
+                        >Role</label
+                    >
+                    <input
+                        v-model="form.role"
+                        type="text"
+                        id="role"
+                        class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter darasa capacity"
+                    />
+                    <div v-if="form.errors.role" class="text-red-500 text-sm">
+                        {{ form.errors.role }}
+                    </div>
                 </div>
 
                 <!-- Submit Button -->

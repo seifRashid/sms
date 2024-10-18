@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -28,8 +30,29 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dd($request);
+        // Step 1: Validate the incoming request
+        $validatedData = $request->validate([
+            'student_name' => 'required|string|max:255',
+            'student_password' => 'required|string|min:8',
+            'role' => 'required|in:student,student,parent'
+            // Add any additional validation for user or student-specific data
+        ]);
+        // Step 2: Create the User record
+        $user = User::create([
+            'name' => $validatedData['student_name'],
+            'role' => $validatedData['role'],
+            'password' => Hash::make($validatedData['student_password']),
+            // Other user fields if necessary
+        ]);
+        // dd($user);
+        // Step 3: Create the student record and link it to the user
+        Student::create([
+            'user_id' => $user->id, // Link the student to the user using the user_id
+            // Other student-specific fields
+        ]);
+
+        // Step 4: Redirect or respond with success message
+        return redirect()->route('register')->with('success', 'student created successfully!');
     }
 
     /**
