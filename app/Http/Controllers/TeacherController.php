@@ -6,6 +6,7 @@ use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class TeacherController extends Controller
 {
@@ -14,7 +15,21 @@ class TeacherController extends Controller
      */
     public function index()
     {
-        //
+
+        return Inertia::render('Teacher/Index', [
+            //get data from teachers table in the database
+            'teachers' => Teacher::with('user:id,name,email')->latest()->get(),
+
+        ]);
+
+        // // Fetch all teachers and eager load the 'user' relationship
+        // $teachers = Teacher::with('user')->get();
+
+        // // Return the data to the Inertia page
+        // return Inertia::render('Teachers/Index', [
+        //     'teachers' => $teachers,
+        // ]);
+
     }
 
     /**
@@ -35,7 +50,7 @@ class TeacherController extends Controller
             'teacher_name' => 'required|string|max:255',
             'teacher_email' => 'required|email|unique:users,email',
             'teacher_password' => 'required|string|min:8',
-            'role' => 'required|in:student,teacher,parent'
+            'role' => 'required|in:student,teacher,parent',
             // Add any additional validation for user or teacher-specific data
         ]);
         // Step 2: Create the User record

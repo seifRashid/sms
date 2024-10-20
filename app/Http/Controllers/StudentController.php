@@ -6,6 +6,7 @@ use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class StudentController extends Controller
 {
@@ -15,6 +16,11 @@ class StudentController extends Controller
     public function index()
     {
         //
+        return Inertia::render('Student/Index', [
+            //get data from teachers table in the database
+            'students' => Student::with('user:id,name,email')->latest()->get(),
+
+        ]);
     }
 
     /**

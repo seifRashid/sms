@@ -1,0 +1,42 @@
+<script setup>
+// import DashboardContent from "@/Components/DashboardComponents/DashboardContent.vue";
+import AdminDashboard from "@/Components/DashboardComponents/AdminDashboard.vue";
+import CreateUserModal from "@/Components/DashboardComponents/CreateUserModal.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/vue3";
+
+import { useCreateUserStore } from "@/Stores/CreateUser";
+import ParentDashboard from "@/Components/DashboardComponents/ParentDashboard.vue";
+const showModal = useCreateUserStore();
+
+defineProps({
+    guardians: Array
+})
+
+</script>
+
+<template>
+    <Head title="Dashboard" />
+
+    <div
+        :class="{
+            'blur-sm':
+                showModal.CreateModalBtnTeacher ||
+                showModal.CreateModalBtnStudent ||
+                showModal.CreateModalBtnGuardian ||
+                showModal.CreateModalBtnDarasa,
+        }"
+    >
+        <AuthenticatedLayout>
+            <template #header>
+                <h2 class="text-xl font-semibold leading-tight text-gray-800">
+                    Guardians
+                </h2>
+            </template>
+
+            <!-- Content -->
+             <ParentDashboard :guardians="guardians"/>
+        </AuthenticatedLayout>
+    </div>
+    <CreateUserModal />
+</template>

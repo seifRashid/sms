@@ -30,15 +30,15 @@ Route::middleware('auth')->group(function () {
 
 //for teacher
 Route::resource('teacher', TeacherController::class)
-    ->only(['store']);
+    ->only(['index','store']);
 
 //for student
 Route::resource('student', StudentController::class)
-    ->only(['store']);
+    ->only(['index','store']);
 
 //for Guardian
 Route::resource('guardian', GuardianController::class)
-    ->only(['store']);
+    ->only(['index','store']);
 
 //for Darasa
 Route::resource('darasa', DarasaController::class)

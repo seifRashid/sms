@@ -6,6 +6,7 @@ use App\Models\Guardian;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Inertia\Inertia;
 
 class GuardianController extends Controller
 {
@@ -15,6 +16,11 @@ class GuardianController extends Controller
     public function index()
     {
         //
+        return Inertia::render('Guardian/Index', [
+            //get data from teachers table in the database
+            'guardians' => Guardian::with('user:id,name,email')->latest()->get(),
+
+        ]);
     }
 
     /**

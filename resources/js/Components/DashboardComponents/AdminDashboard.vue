@@ -2,6 +2,7 @@
 import { useCreateUserStore } from "@/Stores/CreateUser";
 import { ref } from "vue";
 import CreateDeleteComponent from "../CreateDeleteComponent.vue";
+import { Link } from "@inertiajs/vue3";
 
 const showModal = useCreateUserStore();
 
@@ -39,7 +40,7 @@ function showModalBtnClass() {
 
             <template #deleteRole> Delete Teacher </template>
 
-            <template #showRole> Show Teacher </template>
+            <template #showRole> <Link :href="route('teacher.index')"> Show Teachers </Link></template>
         </CreateDeleteComponent>
 
         <!-- Guardian buttons -->
@@ -52,7 +53,7 @@ function showModalBtnClass() {
 
             <template #deleteRole> Delete Guardian </template>
 
-            <template #showRole> Show Guardians </template>
+            <template #showRole> <Link :href="route('guardian.index')"> Show Guardians </Link> </template>
         </CreateDeleteComponent>
 
         <!-- Student buttons -->
@@ -65,7 +66,7 @@ function showModalBtnClass() {
 
             <template #deleteRole> Delete Student </template>
 
-            <template #showRole> Show Students </template>
+            <template #showRole> <Link :href="route('student.index')"> Show Students </Link> </template>
         </CreateDeleteComponent>
 
         <!-- Class buttons -->
