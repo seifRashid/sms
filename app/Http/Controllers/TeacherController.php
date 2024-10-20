@@ -18,7 +18,7 @@ class TeacherController extends Controller
 
         return Inertia::render('Teacher/Index', [
             //get data from teachers table in the database
-            'teachers' => Teacher::with('user:id,name,email')->latest()->get(),
+            'teachers' => Teacher::with('user:id,name,email')->latest()->paginate(4),
 
         ]);
 

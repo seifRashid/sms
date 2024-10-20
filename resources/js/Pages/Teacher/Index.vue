@@ -10,7 +10,7 @@ import TeacherDashboard from "@/Components/DashboardComponents/TeacherDashboard.
 const showModal = useCreateUserStore();
 
 defineProps({
-    teachers: Array
+    teachers: Object
 })
 
 </script>
