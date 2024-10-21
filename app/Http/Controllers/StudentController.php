@@ -18,7 +18,7 @@ class StudentController extends Controller
         //
         return Inertia::render('Student/Index', [
             //get data from teachers table in the database
-            'students' => Student::with('user:id,name,email')->latest()->get(),
+            'students' => Student::with('user:id,name,email')->latest()->paginate(3),
 
         ]);
     }

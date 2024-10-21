@@ -1,4 +1,6 @@
 <script setup>
+import { Link } from "@inertiajs/vue3";
+
 // import { Inertia } from '@inertiajs/inertia';
 defineProps({
     teachers: Object,
@@ -129,7 +131,30 @@ const changePage = (page) => {
             <!-- Pagination Controls -->
             <div class="p-3">
                 <div class="flex gap-2 items-center justify-center divide-y-1">
-                    <button
+                    <!-- Create links for pagination -->
+                    <template v-for="link in teachers.links" :key="link.label">
+                        <!-- Style the pagination container -->
+                         <div
+                         v-if="link.url"
+                         class="inline-block py-2 px-2 text-sm font-medium text-gray-500 transition
+                         duration-150 ease-in-out hover:text-gray-700 hover:bg-gray-100
+                         dark:hover:text-gray-400 dark:hover:bg-gray-700"
+                         >
+                         <Link :href="link.url" v-html="link.label" preserveState: true class="text-gray-500 transition duration-150 ease
+                         in-out hover:text-gray-700 dark:hover:text-gray-400"
+                         :class="{ 'bg-white px-2 py-1 border border-gray-200 rounded-md  dark:bg-gray-900 font-bold text-lg': link.active }"
+                         />
+
+                        </div>
+                        <!-- The v-if looks if the link has a url make it visible else show the label -->
+                        <span v-else :v-html="link.label"
+                        class="
+                        inline-block py-2 px-4 text-sm font-medium text-gray-500 transition
+                        duration-150 ease-in-out hover:text-gray-700 hover:bg-gray-100
+                        dark:hover:text-gray-400 dark:hover:bg-gray-700"
+                        ></span>
+                    </template>
+                    <!-- <button
                         v-if="teachers.current_page > 1"
                         @click="changePage(teachers.current_page - 1)"
                         class="border rounded-s-lg p-2 hover:border-gray-500"
@@ -153,7 +178,7 @@ const changePage = (page) => {
                         class="border rounded-e-lg hover:border-gray-500 p-2"
                     >
                         Next
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </div>
